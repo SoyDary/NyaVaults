@@ -1,0 +1,30 @@
+name: NyaVaults
+main: me.nya.NyaVaults
+version: 0.1
+api-version: 1.17
+softdepend: [ActionsChat, DiscordSRV, PlaceholderAPI]
+commands:
+   NyaVaults:
+      aliases: [nv]
+      description: Marcar mapa
+      usage: /<command>
+   MarkMap:
+      aliases: [mm]
+      description: Marcar mapa
+      usage: /<command>
+   MyVault:
+      aliases: [caja, backpack]
+      description: Caja fuerte
+      usage: /<command>
+   MyCookies:
+      aliases: [galletas]
+      description: Caja fuerte de galletas
+      usage: /<command>
+   MyMaps:
+      aliases: [mapas]
+      description: Caja fuerte de mapas
+      usage: /<command>
+   MarryChest:
+      aliases: [mc]
+      description: Cofre compartido
+      usage: /<command>

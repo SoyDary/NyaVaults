@@ -1,21 +1,22 @@
-package me.nya;
+package me.dary;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.nya.InventoryHolder.GUIManager;
-import me.nya.Utils.Utils;
+import com.earth2me.essentials.Essentials;
 
-public class NyaVaults extends JavaPlugin{
+import me.dary.Commands.Comandos;
+import me.dary.Commands.MapColor;
+import me.dary.InventoryHolder.GUIManager;
+import me.dary.Utils.Utils;
+
+public class NyaVaults extends JavaPlugin {
 	private Utils utils;
 	private DataManager datamanager;
 	Comandos comandos;
 	GUIManager guimanager;
+	public Essentials essentials;
 	public String server_version;
-	
-	
-
 
 	public void onEnable() {
 		this.utils = new Utils(this);
@@ -23,69 +24,61 @@ public class NyaVaults extends JavaPlugin{
 		this.comandos = new Comandos();
 		this.guimanager = new GUIManager();
 		Bukkit.getConsoleSender().sendMessage("[NyaVaults] Activado uwu");
-		Bukkit.getPluginManager().registerEvents(new Eventos(), (Plugin)this);
-		if(Bukkit.getPluginManager().getPlugin("ActionsChat") != null) {
-			getCommand("marrychest").setExecutor(new Comandos());
-			Bukkit.getPluginManager().registerEvents(new MarryListener(), (Plugin)this);
-		}	
+		Bukkit.getPluginManager().registerEvents(new Eventos(), this);
+		if (Bukkit.getPluginManager().isPluginEnabled("Essentials"))
+			this.essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 		getCommand("nyavaults").setExecutor(new Comandos());
 		getCommand("markmap").setExecutor(new Comandos());
 		getCommand("myvault").setExecutor(new Comandos());
 		getCommand("mycookies").setExecutor(new Comandos());
+		getCommand("mapcolor").setExecutor(new MapColor());
 		getCommand("mymaps").setExecutor(new Comandos());
 		getCommand("nyavaults").setTabCompleter(new TabComplete());
 		loadConfig();
 		getDataManager().onStart();
 		this.server_version = getServerVersion();
-		
 
-	
 	}
-    public boolean hasAC() {
-    	boolean bl = false;
-		if(Bukkit.getPluginManager().getPlugin("ActionsChat") != null) {
-			bl = true;
-		}
-		return bl;
-    }
-	
+
 	public void onDisable() {
 		Bukkit.getConsoleSender().sendMessage("[NyaVaults] Desactivado unu");
-		
+
 	}
-	
-	
+
 	public void loadConfig() {
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 	}
-	
-	public Utils getUtils() {		
-	    return this.utils;
-	    
+
+	public Utils getUtils() {
+		return this.utils;
+
 	}
+
 	public DataManager getDataManager() {
 		return this.datamanager;
 	}
+
 	public static NyaVaults getInstance() {
-		return (NyaVaults)JavaPlugin.getPlugin(NyaVaults.class);
+		return (NyaVaults) JavaPlugin.getPlugin(NyaVaults.class);
 	}
-	public Comandos getCommands() {					
+
+	public Comandos getCommands() {
 		return this.comandos;
 	}
-	public GUIManager getGUI() {					
+
+	public GUIManager getGUI() {
 		return this.guimanager;
 	}
 
 	private String getServerVersion() {
 		String version;
 		try {
-			version = Bukkit.getServer().getClass().getPackage().getName().replace(".",  ",").split(",")[3];
-		} catch(Exception e) {
+			version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+		} catch (Exception e) {
 			return "unknown";
 		}
 		return version;
 	}
-	
-	
+
 }

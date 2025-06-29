@@ -1,4 +1,4 @@
-package me.nya.InventoryHolder;
+package me.dary.InventoryHolder;
 
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.common.collect.Lists;
 
-import me.nya.NyaVaults;
+import me.dary.NyaVaults;
 
 public class AdminGUI implements InventoryHolder {	
 	  public ArrayList<Inventory> pages = new ArrayList<>();
@@ -49,7 +49,7 @@ public class AdminGUI implements InventoryHolder {
 	}
 
 	private Inventory blankPage(int current, int total) {
-	    Inventory page = Bukkit.createInventory(this, 54, "ง4Jugadores registrados ง8(ง7"+(current+1)+"ง8/ง7"+(total)+"ง8)");
+	    Inventory page = Bukkit.createInventory(this, 54, "ยง4Jugadores registrados ยง8(ยง7"+(current+1)+"ยง8/ยง7"+(total)+"ยง8)");
 	    ItemStack nextpage = new ItemStack(Material.ARROW);
 	    ItemMeta meta = nextpage.getItemMeta();
 	    meta.setDisplayName(this.plugin.getUtils().color("&cSiguiente pagina"));
@@ -61,7 +61,7 @@ public class AdminGUI implements InventoryHolder {
 	    ItemStack compass = new ItemStack(Material.COMPASS);
 	    compass.setAmount(current+1);
 	    ItemMeta cmeta = compass.getItemMeta();
-	    cmeta.setDisplayName("ง4");
+	    cmeta.setDisplayName("ยง4");
 	    compass.setItemMeta(cmeta);
 	    for (int i1 = 45; i1 < page.getSize(); i1++) { page.setItem(i1, emptyItem(Material.RED_STAINED_GLASS_PANE)); }
 	    if(total > current+1) page.setItem(50, nextpage);
@@ -72,7 +72,7 @@ public class AdminGUI implements InventoryHolder {
 	public ItemStack emptyItem(Material mat) {
 		ItemStack item = new ItemStack(mat);
 		ItemMeta im = item.getItemMeta();
-		im.setDisplayName("ง4");
+		im.setDisplayName("ยง4");
 		item.setItemMeta(im);
 		return item;
 		

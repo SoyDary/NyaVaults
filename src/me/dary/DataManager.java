@@ -1,4 +1,4 @@
-package me.nya;
+package me.dary;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,17 +103,6 @@ public class DataManager {
 		
 	}
 	public void onStart() {
-		if(plugin.hasAC()) {
-		if(!CouplesFile.exists()) {
-			try {
-				CouplesFile.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			Couples.set("couples_id", 0);
-			saveCouples();			
-		}
-		}
 		File carpetita = new File(plugin.getDataFolder(), "SavedMaps");
 		if(!carpetita.exists()) {
 			carpetita.mkdir();

@@ -1,4 +1,4 @@
-package me.nya;
+package me.dary;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package me.nya.InventoryHolder;
+package me.dary.InventoryHolder;
 
 
 import java.io.File;
@@ -13,28 +13,32 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import me.nya.NyaVaults;
-import me.nya.Utils.Utils;
+import me.dary.NyaVaults;
+import me.dary.Utils.Utils;
 
 public class VaultGUI implements InventoryHolder {	
 	NyaVaults plugin = NyaVaults.getPlugin(NyaVaults.class);
 	Inventory inv;
 	String target;
+
 	public VaultGUI(String target) throws IOException {	
 		this.inv = Bukkit.createInventory(this, 54, plugin.getUtils().color("  &e⌂ &#FFFF1A&lCaja fuerte principal &e⌂"));
 		this.target	= target;
 		loadItems(target);	
-		}
+	}
  
 	public void loadItems(String t) throws IOException {
 		File pvf = new File(plugin.getDataFolder(), "PlayerVaults/"+target+".yml");
 		FileConfiguration pv = (FileConfiguration)YamlConfiguration.loadConfiguration(pvf);
 		String invb64 = pv.getString("MainVault.1");
 		if(invb64 != null) {
-			plugin.getUtils();
+			
 			Inventory inv = Utils.fromBase64(invb64);
+
 			ItemStack[] items = inv.getContents();
+
 			this.inv.setContents(items);
+
 		}
 	}
 

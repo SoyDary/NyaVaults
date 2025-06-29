@@ -1,5 +1,11 @@
-package me.nya;
+package me.dary;
 
+import org.bukkit.event.Listener;
+
+public class MarryListener implements Listener{
+	
+}
+/*
 import java.io.File;
 import java.io.IOException;
 
@@ -19,9 +25,9 @@ import com.hotmail.faviorivarola.ActionsChat.events.AcceptMarryEvent;
 import com.hotmail.faviorivarola.ActionsChat.events.DivorceMarryEvent;
 import com.hotmail.faviorivarola.ActionsChat.events.ProposeMarryEvent;
 
-import me.nya.InventoryHolder.CoupleGUI;
-import me.nya.Utils.ItemUtils;
-import me.nya.Utils.Utils;
+import me.dary.InventoryHolder.CoupleGUI;
+import me.dary.Utils.ItemUtils;
+import me.dary.Utils.Utils;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -145,3 +151,4 @@ public class MarryListener implements Listener{
 	}
 
 }
+*/

@@ -1,4 +1,4 @@
-package me.nya.InventoryHolder;
+package me.dary.InventoryHolder;
 
 
 import java.io.File;
@@ -14,8 +14,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import me.nya.NyaVaults;
-import me.nya.Utils.Utils;
+import me.dary.NyaVaults;
+import me.dary.Utils.Utils;
 
 public class MapsGUI implements InventoryHolder {	
 	NyaVaults plugin = NyaVaults.getPlugin(NyaVaults.class);

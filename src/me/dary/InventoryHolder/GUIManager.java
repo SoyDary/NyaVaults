@@ -1,4 +1,4 @@
-package me.nya.InventoryHolder;
+package me.dary.InventoryHolder;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import me.nya.NyaVaults;
-import me.nya.Utils.ItemUtils;
+import me.dary.NyaVaults;
+import me.dary.Utils.ItemUtils;
 
 
 public class GUIManager {
@@ -66,7 +66,7 @@ public class GUIManager {
 			}
 		}
 		if(mainVault.containsKey(target)) {
-			VaultGUI gui = mainVault.get(target);				
+			VaultGUI gui = mainVault.get(target);	
 			p.openInventory(setExtraItems(gui.getInventory(), p, target, false));
 		} else {
 			VaultGUI gui = null;
@@ -173,12 +173,6 @@ public class GUIManager {
 		if(p.hasPermission("nv.admin")) {
 			inv.setItem(46, ItemUtils.namedItem(Material.BARRIER, "&c&oEliminar jugador"));
 			inv.setItem(47, plugin.getUtils().vault_AdminButton());
-		}
-		if(plugin.hasAC()) {
-			if(plugin.getDataManager().Players.getString("Players."+target+".couple_vaultID") != null) {
-				inv.setItem(50, plugin.getUtils().couple_button(target, enchanted));
-			}
-			 inv.setItem(45, plugin.getUtils().vaultItem_head(target));
 		}
 
 		return inv;

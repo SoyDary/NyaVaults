@@ -1,8 +1,8 @@
 name: NyaVaults
-main: me.nya.NyaVaults
-version: 0.1
+main: me.dary.NyaVaults
+version: 1.0
 api-version: 1.17
-softdepend: [ActionsChat, DiscordSRV, PlaceholderAPI]
+softdepend: [ActionsChat, DiscordSRV, PlaceholderAPI, NBTAPI, Essentials]
 commands:
    NyaVaults:
       aliases: [nv]
@@ -11,6 +11,9 @@ commands:
    MarkMap:
       aliases: [mm]
       description: Marcar mapa
+      usage: /<command>
+   MapColor:
+      description: Pinta un mapa
       usage: /<command>
    MyVault:
       aliases: [caja, backpack]

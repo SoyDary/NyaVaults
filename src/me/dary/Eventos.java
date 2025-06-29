@@ -1,4 +1,4 @@
-package me.nya;
+package me.dary;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,15 +21,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import me.nya.InventoryHolder.AdminGUI;
-import me.nya.InventoryHolder.CookiesGUI;
-import me.nya.InventoryHolder.CoupleGUI;
-import me.nya.InventoryHolder.MapsGUI;
-import me.nya.InventoryHolder.VaultGUI;
-import me.nya.Utils.ItemUtils;
-import me.nya.Utils.Utils;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
+import de.tr7zw.nbtapi.NBTItem;
+import me.dary.InventoryHolder.AdminGUI;
+import me.dary.InventoryHolder.CookiesGUI;
+import me.dary.InventoryHolder.CoupleGUI;
+import me.dary.InventoryHolder.MapsGUI;
+import me.dary.InventoryHolder.VaultGUI;
+import me.dary.Utils.Utils;
 
 public class Eventos implements Listener {
 	ArrayList<Player> clicked = new ArrayList<Player>();
@@ -112,18 +110,7 @@ public class Eventos implements Listener {
 					}
 
 				}
-				if(e.getSlot() == 50) {
-					if(plugin.hasAC()) {
-						if(hasCouple(owner)) {
-							try {
-								plugin.getGUI().couple(p, owner);
-								p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5, 1);
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-						}
-					}
-				}
+
 				if(e.getSlot() == 52) {
 					try {
 						plugin.getGUI().cookies(p, owner);
@@ -135,7 +122,7 @@ public class Eventos implements Listener {
 				}
 			   if(e.getSlot() == 53) {
 					try {
-						plugin.getGUI().maps(p, owner);
+						plugin.getGUI().maps(p, owner);						
 						p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5, 1);
 					} catch (IOException e1) {
 						e1.printStackTrace();
@@ -157,18 +144,7 @@ public class Eventos implements Listener {
 						}
 
 					}
-					if(e.getSlot() == 50) {
-						if(plugin.hasAC()) {
-							if(hasCouple(owner)) {
-								try {
-									plugin.getGUI().couple(p, owner);
-									p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5, 1);
-								} catch (IOException e1) {
-									e1.printStackTrace();
-								}
-							}
-						}
-					}
+
 				if(e.getSlot() == 51) {
 					try {
 						plugin.getGUI().vault(p, owner);
@@ -199,6 +175,7 @@ public class Eventos implements Listener {
 		if (topInv.getHolder() instanceof MapsGUI) {	
 			String owner = getVaultOwner(topInv.getItem(45));
 			ItemStack currentItem = e.getCurrentItem();
+			if(e.getSlot() == 53) e.setCancelled(true);
 			if(currentItem != null) {
 				if(!currentItem.getType().toString().equalsIgnoreCase("FILLED_MAP")) {			
 				e.setCancelled(true);	
@@ -209,18 +186,6 @@ public class Eventos implements Listener {
 							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5, 1);
 						}
 
-					}
-					if(e.getSlot() == 50) {
-						if(plugin.hasAC()) {
-							if(hasCouple(owner)) {
-								try {
-									plugin.getGUI().couple(p, owner);
-									p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5, 1);
-								} catch (IOException e1) {
-									e1.printStackTrace();
-								}
-							}
-						}
 					}
 					
 					
@@ -247,7 +212,7 @@ public class Eventos implements Listener {
 				    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 5, 1);
 				}
 			} else {
-				if(!validMap(currentItem)) {
+				if(!validMap(currentItem) && !p.hasPermission("nya.mapasbypass")) {
 					e.setCancelled(true);
 					if(!currentItem.equals(plugin.getUtils().vaultItem_maps(true))) {
 						 p.sendMessage(plugin.getUtils().color("&b▆ &#ffff66¡Debes de marcar este mapa como &#b3ecffespecial &#ffff66primero!"));
@@ -323,27 +288,14 @@ public class Eventos implements Listener {
 		
 	}
 	public boolean validMap(ItemStack item) {
-        boolean bl = false;
-	    net.minecraft.world.item.ItemStack nmsitem = ItemUtils.getNMSItem(item);
-	    NBTTagCompound tag = nmsitem.u();
-	    if (tag == null) tag = new NBTTagCompound(); 
-	    for (String k : tag.d()) {
-	        if (k.equalsIgnoreCase("SavedMap")) {
-	        	bl = true;
-	        } 
-	      } 
-	    return bl;
+        NBTItem nbt = new NBTItem(item);
+        return nbt.getString("SavedMap").equals("true");
 	}
 	
 	public String getVaultOwner(ItemStack item) {	
-		String owner = null;
-		if(item != null) {
-		net.minecraft.world.item.ItemStack nmsitem = ItemUtils.getNMSItem(item);
-		NBTTagCompound tag = nmsitem.u(); if (tag == null) tag = new NBTTagCompound(); 
-		NBTBase nbtbase = tag.c("VaultUUID"); owner = nbtbase.toString().replaceAll("\"", "");
-		}
-		return owner;
-		
+		if(item == null) return null;
+		NBTItem nbt = new NBTItem(item);
+		return nbt.getString("VaultUUID");	
 	}
 	public boolean hasCouple(String uuid) {
 		boolean bl = false;

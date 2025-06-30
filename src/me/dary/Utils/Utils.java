@@ -67,10 +67,10 @@ public class Utils {
 			return null;
 
 		if (str.length() == 36) {
-			User user = plugin.essentials.getUser(UUID.fromString(str));
-			if (user != null) {
+			//User user = plugin.essentials.getUser(UUID.fromString(str));
+			//if (user != null) {
 				return Bukkit.getOfflinePlayer(UUID.fromString(str));
-			}
+			//}
 		}
 		User user = plugin.essentials.getUser(str);
 		if (user != null) {

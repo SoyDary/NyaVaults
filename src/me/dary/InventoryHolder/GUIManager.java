@@ -51,8 +51,50 @@ public class GUIManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		return gui.getInventory();	
 	}
+	
+	public Inventory genericCookies(Player p, String target) throws IOException {
+		File pvf = new File(plugin.getDataFolder(), "PlayerVaults/"+target+".yml");
+		FileConfiguration pv = (FileConfiguration)YamlConfiguration.loadConfiguration(pvf);
+		plugin.getUtils();
+		if (!pvf.exists()) {
+			try {
+				pv.save(pvf);	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		CookiesGUI gui = null;
+		try {
+			gui = new CookiesGUI(target);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return gui.getInventory();	
+	}
+	
+	public Inventory genericMaps(Player p, String target) throws IOException {
+		File pvf = new File(plugin.getDataFolder(), "PlayerVaults/"+target+".yml");
+		FileConfiguration pv = (FileConfiguration)YamlConfiguration.loadConfiguration(pvf);
+		plugin.getUtils();
+		if (!pvf.exists()) {
+			try {
+				pv.save(pvf);	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		MapsGUI gui = null;
+		try {
+			gui = new MapsGUI(target);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return gui.getInventory();	
+	}
+	
 	public void vault(Player p, String target) throws IOException {
 		if(p.hasPermission("nv.caja")) {
 		File pvf = new File(plugin.getDataFolder(), "PlayerVaults/"+target+".yml");
@@ -108,6 +150,7 @@ public class GUIManager {
 			p.openInventory(setExtraItems(gui.getInventory(), p, target, false));	
 		}	
 	}
+	
 	public void admin(Player p, int page) {
 		try {
 			AdminGUI gui = new AdminGUI(p, page);

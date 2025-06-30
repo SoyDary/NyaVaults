@@ -16,6 +16,7 @@ public class TabComplete implements TabCompleter {
         commandsList.add("admin");
         commandsList.add("test");
         commandsList.add("seassonitem");
+        commandsList.add("export");
         for (String text : commandsList) {
           if (text.toLowerCase().startsWith(args[0].toLowerCase()))
             preCommands.add(text); 

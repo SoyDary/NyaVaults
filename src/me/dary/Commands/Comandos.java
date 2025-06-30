@@ -15,6 +15,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Sign;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Chest.Type;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -59,6 +68,9 @@ public class Comandos implements CommandExecutor {
 						if (a[0].equalsIgnoreCase("test")) {
 							p.sendMessage("" + p.getName());
 
+						}
+						if (a[0].equalsIgnoreCase("export")) {
+							//export(player);
 						}
 						if (a[0].equalsIgnoreCase("seassonItem")) {
 							seassonItem(player);
@@ -412,6 +424,98 @@ public class Comandos implements CommandExecutor {
 		return NumberFormat.getIntegerInstance().format(x);
 	}
 
+	/*
+	public void export(Player p) {
+		List<String> players = plugin.getDataManager().registedPlayers();
+	    generarCoordenadas();
+	}
+	
+    public void generarCoordenadas() {
+    	int filasZ = 20;
+        int espacioX = 2;
+        int espacioEntreCeldas = 1;
+
+        List<String> players = plugin.getDataManager().registedPlayers();
+        for (int i = 0; i < players.size(); i++) {
+        	String uuid = players.get(i);
+        	String name = plugin.getDataManager().getNameFromUUID(uuid);
+            int columnaX = i / filasZ;
+            int filaZ = i % filasZ;
+
+            int baseX = (espacioX + espacioEntreCeldas) * columnaX;
+
+            int x1 = baseX;
+            int x2 = baseX + 1;
+            int z = filaZ;
+            
+            System.out.println("Celda " +name+" "+ (i + 1) + ": (" + x1 + ", " + z + ") - (" + x2 + ", " + z + ")");
+            signID(x1, 125, z, name, ""+uuid);
+            
+            chest(x1, 123, z, Type.LEFT,"vault");
+            chest(x2, 123, z, Type.RIGHT,"vault");
+            try {
+            	setContent(x1, 123, z, plugin.getGUI().genericVault(null, uuid).getContents());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            
+            chest(x1, 122, z, Type.LEFT,"cookies");
+            chest(x2, 122, z, Type.RIGHT,"cookies");
+            try {
+            	setContent(x1, 122, z, plugin.getGUI().genericCookies(null, uuid).getContents());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            
+            chest(x1, 121, z, Type.LEFT,"maps");
+            chest(x2, 121, z, Type.RIGHT,"maps");
+            try {
+            	setContent(x1, 121, z, plugin.getGUI().genericMaps(null, uuid).getContents());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+            
+        }
+    }
+    
+    public void setContent(int x, int y, int  z, ItemStack[] contents) {
+    	Block block = Bukkit.getWorld("Nya").getBlockAt(x, y, z);
+    	Chest chest = (Chest) block.getState();
+    	chest.getInventory().setContents(contents);
+    	
+    }
+    public void chest(int x, int y, int  z, Type type, String ID) {
+    	Block block = Bukkit.getWorld("Nya").getBlockAt(x, y, z);
+    
+    	block.setType(Material.CHEST);
+    	Chest chest = (Chest) block.getState();
+    	chest.setCustomName("nvchest-"+ID);
+        BlockData blockData = chest.getBlockData();
+        org.bukkit.block.data.type.Chest chestData = (org.bukkit.block.data.type.Chest) blockData;   	
+        chestData.setType(type);
+        chest.setBlockData(chestData);
+        chest.update();
+    }
+    
+    public void signID(int x, int y, int  z, String name, String uuid) {
+    	Block block = Bukkit.getWorld("Nya").getBlockAt(x, y, z);
+    
+    	block.setType(Material.BIRCH_SIGN);
+    	Sign sign = (Sign) block.getState();
+    	
+    	sign.getSide(Side.FRONT).setLine(0, ""+x+" "+z);
+    	sign.getSide(Side.FRONT).setLine(1, ""+name);
+    	sign.getSide(Side.FRONT).setLine(3, ""+uuid);
+        BlockData blockData = sign.getBlockData();
+        org.bukkit.block.data.type.Sign signData = (org.bukkit.block.data.type.Sign) blockData;   	
+        signData.setRotation(BlockFace.NORTH);
+        sign.setBlockData(signData);
+        sign.update();
+    }
+    */
+
+	
 	public void seassonItem(Player p) {
 		ItemStack item = new ItemStack(Material.GOLDEN_AXE);
 		item = Utils.setTags(item, p);

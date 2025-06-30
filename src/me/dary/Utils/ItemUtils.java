@@ -77,33 +77,16 @@ public class ItemUtils {
 
 	}
 
-	/*
 	public static ItemStack getSkullFromTexture(String texture, UUID uuid) {	
+		if(texture == null) {
+			return getHeadFromOF(uuid);
+		}
 		if(texture.length() < 65) {
 			texture = "http://textures.minecraft.net/texture/"+texture;
 		}
 		ItemStack item = new ItemStack(Material.PLAYER_HEAD);  
 		SkullMeta skullMeta = (SkullMeta)item.getItemMeta();
-		skullMeta.setOwnerProfile(null);
-		PlayerProfile profile = Bukkit.createPlayerProfile(uuid, ((int) (Math.random() * 90000000) + 10000000)+"");
-		PlayerTextures textures = profile.getTextures();
-		try {
-			textures.setSkin(new URL("http://textures.minecraft.net/texture/"+texture));
-		} catch (MalformedURLException e) {}
-		profile.setTextures(textures);
-		skullMeta.setOwnerProfile(profile);
-		item.setItemMeta(skullMeta);
-		return item;	
-	}
-	
-	public static ItemStack getSkullFromTexture(String texture) {	
-		if(texture.length() < 65) {
-			texture = "http://textures.minecraft.net/texture/"+texture;
-		}
-		ItemStack item = new ItemStack(Material.PLAYER_HEAD);  
-		SkullMeta skullMeta = (SkullMeta)item.getItemMeta();
-		skullMeta.setOwnerProfile(null);
-		PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID(), ((int) (Math.random() * 90000000) + 10000000)+"");
+		PlayerProfile profile = Bukkit.createPlayerProfile(uuid);
 		PlayerTextures textures = profile.getTextures();
 		try {
 			textures.setSkin(new URL("http://textures.minecraft.net/texture/"+texture));
@@ -121,6 +104,5 @@ public class ItemUtils {
 		item.setItemMeta(meta);
 		return item;
 	}
-	*/
 
 }

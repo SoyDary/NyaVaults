@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -15,6 +17,7 @@ import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -36,17 +39,24 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.earth2me.essentials.User;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.dary.NyaVaults;
 import net.md_5.bungee.api.ChatColor;
+import net.skinsrestorer.api.SkinsRestorer;
+import net.skinsrestorer.api.SkinsRestorerProvider;
+import net.skinsrestorer.api.property.SkinProperty;
 
 public class Utils {
 	NyaVaults plugin;
 
 	Boolean hasPlaceholderApi = Boolean.valueOf(false);
+	SkinsRestorer skins = SkinsRestorerProvider.get();
 
 	private final Pattern pattern;
 
@@ -318,7 +328,7 @@ public class Utils {
 
 	public ItemStack vaultItem_maps(boolean enchanted) {
 		ItemStack item = new ItemStack(Material.FILLED_MAP);
-	    ItemMeta im = item.getItemMeta();
+	    MapMeta im = (MapMeta) item.getItemMeta();
 		if (enchanted)
 			im.addEnchant(Enchantment.LURE, 1, false);
 		im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -333,13 +343,9 @@ public class Utils {
 		lore.add(color("&8&l&m                                                "));
 		im.setDisplayName(color("              &#00bfff&lBibilioteca de mapas"));
 		im.setLore(lore);
+		im.setColor(Color.fromRGB(16747546));
 		item.setItemMeta(im);
-		NBTItem nbt = new NBTItem(item);
-		NBTCompound comp = nbt.getOrCreateCompound("display");
-		comp.setInteger("MapColor", 16747546);
-		//nbt.setInteger("map", 0);
-		nbt.mergeCompound(comp);
-		return nbt.getItem();
+		return item;
 
 	}
 
@@ -362,17 +368,15 @@ public class Utils {
 	}
 
 	public ItemStack vaults_headbutton(String uuid) {
-		//ItemStack head = ItemUtils.getSkullFromTexture(PlaceholderAPI.setPlaceholders(null, "%profile_{" + uuid + "}_skinid%"), UUID.fromString(uuid));
-		ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-		//ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+		ItemStack item = new ItemStack(Material.CYAN_CANDLE);
 		ArrayList<String> lore = new ArrayList<String>();
-		SkullMeta meta = (SkullMeta) head.getItemMeta();
+		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(color(playerColor(uuid) + plugin.getDataManager().getNameFromUUID(uuid)));
 		lore.add(color("&7") + uuid);
 		meta.setLore(lore);
-		head.setItemMeta((ItemMeta) meta);
-		head = setTag(head, uuid);
-		return head;
+		item.setItemMeta((ItemMeta) meta);
+		item = setTag(item, uuid);
+		return item;
 
 	}
 
@@ -437,7 +441,6 @@ public class Utils {
 	}
 
 	public ItemStack vault_AdminButton() {
-		//ItemStack item = ItemUtils.getSkullFromTexture("588149e56cde02eee620982884b893634756be9141f2e2777b51cb0a66c31dce");
 		ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 		ItemMeta im = item.getItemMeta();
 		im.setDisplayName(color("&#ffff00&lMenu de nyadmin"));
@@ -465,5 +468,17 @@ public class Utils {
 		nbti.setInteger("RepairCost", 99999);
 		return nbti.getItem();
 	}
+	
+	  public String getSkinID(String uuid, boolean encoded) {
+		  SkinProperty data = this.skins.getPlayerStorage().getSkinOfPlayer(UUID.fromString(uuid)).orElse(null);
+		  if (data == null) return null;
+		  if (encoded) data.getValue();
+		  String decodedString = new String(Base64.getDecoder().decode(data.getValue()), StandardCharsets.UTF_8);
+		  JsonElement jsonElement = JsonParser.parseString(decodedString);
+		  JsonObject json = jsonElement.getAsJsonObject();
+		  String texture = json.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").getAsString();
+		  return texture.split("texture/")[1];
+	  }
+	  
 
 }

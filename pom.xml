@@ -25,23 +25,32 @@
 			<url>https://repo.codemc.org/repository/maven-public/</url>
 			<layout>default</layout>
 		</repository>
+		<!-- Essentials -->
 		<repository>
 			<id>essentials-releases</id>
 			<url>https://repo.essentialsx.net/releases/</url>
 		</repository>
+		<!-- SkinsRestorer -->
+		<repository>
+			<id>codemc</id>
+			<url>https://repo.codemc.org/repository/maven-public/</url>
+		</repository>
 	</repositories>
 	<dependencies>
+		<!-- Paper -->
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.20.2-R0.1-SNAPSHOT</version>
+			<version>1.21.6-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- NBTAPI -->
 		<dependency>
 			<groupId>de.tr7zw</groupId>
 			<artifactId>item-nbt-api-plugin</artifactId>
 			<version>2.15.0</version>
 		</dependency>
+		<!-- EssentialsX -->
 		<dependency>
 			<groupId>net.essentialsx</groupId>
 			<artifactId>EssentialsX</artifactId>
@@ -53,6 +62,13 @@
 					<artifactId>bstats-bukkit</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!-- SkinsRestorer -->
+		<dependency>
+			<groupId>net.skinsrestorer</groupId>
+			<artifactId>skinsrestorer-api</artifactId>
+			<version>15.0.7</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

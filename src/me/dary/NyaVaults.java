@@ -25,6 +25,7 @@ public class NyaVaults extends JavaPlugin {
 		this.guimanager = new GUIManager();
 		Bukkit.getConsoleSender().sendMessage("[NyaVaults] Activado uwu");
 		Bukkit.getPluginManager().registerEvents(new Eventos(), this);
+		Bukkit.getPluginManager().registerEvents(new MigraciónListener(), this);
 		if (Bukkit.getPluginManager().isPluginEnabled("Essentials"))
 			this.essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 		getCommand("nyavaults").setExecutor(new Comandos());

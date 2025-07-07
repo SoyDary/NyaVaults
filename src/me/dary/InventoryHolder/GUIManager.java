@@ -11,6 +11,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import me.dary.NyaVaults;
 import me.dary.Utils.ItemUtils;
@@ -214,8 +216,18 @@ public class GUIManager {
 	}
 	public Inventory setExtraItems(Inventory inv, Player p, String target, boolean enchanted) {
 		if(p.hasPermission("nv.admin")) {
-			inv.setItem(46, ItemUtils.namedItem(Material.BARRIER, "&c&oEliminar jugador"));
-			inv.setItem(47, plugin.getUtils().vault_AdminButton());
+			ItemStack item = ItemUtils.namedItem(Material.TEST_BLOCK, "&#ffff00&lMenú de administrador");
+			ItemMeta meta = item.getItemMeta();
+			ArrayList<String> lore = new ArrayList<String>();
+			lore.add(plugin.getUtils().color(""));
+			lore.add(plugin.getUtils().color("&eVer todas las cajas registradas"));
+			lore.add("");
+			lore.add(plugin.getUtils().color("&#ff0000&l&nPRESIONA TECLA UNKNOWN"));
+			lore.add("");
+			lore.add("§cPARA ELIMINAR JUGADOR");
+			meta.setLore(lore);
+			item.setItemMeta(meta);
+			inv.setItem(46, item);
 		}
 
 		return inv;

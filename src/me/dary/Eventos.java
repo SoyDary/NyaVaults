@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -94,19 +95,18 @@ public class Eventos implements Listener {
 				}
 				if(e.getSlot() == 46) {
 					if(p.hasPermission("nv.admin")) {
-						if (e.getClick() != ClickType.MIDDLE) return;
-						p.closeInventory();
-						File pvf = new File(plugin.getDataFolder(), "PlayerVaults/"+owner+".yml");
-						pvf.delete();
-						p.sendMessage("§4Eliminado el cofre §c"+owner);
-						plugin.getGUI().admin(p, 0);
-					}
-
-				}
-				if(e.getSlot() == 47) {
-					if(p.hasPermission("nv.admin")) {
-						plugin.getGUI().admin(p, 0);
-						p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5, 1);
+						p.sendMessage("- "+e.getClick().name());
+						if (e.getClick() == ClickType.UNKNOWN && p.getInventory().getItemInMainHand().getType() == Material.BARRIER) {
+							p.closeInventory();
+							File pvf = new File(plugin.getDataFolder(), "PlayerVaults/"+owner+".yml");
+							pvf.delete();
+							p.sendMessage("§4Eliminado el cofre §c"+owner);
+							plugin.getGUI().admin(p, 0);
+							
+						} else {
+							plugin.getGUI().admin(p, 0);
+							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5, 1);
+						}
 					}
 
 				}
@@ -118,6 +118,7 @@ public class Eventos implements Listener {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
+					return;
 									   
 				}
 			   if(e.getSlot() == 53) {
@@ -127,7 +128,7 @@ public class Eventos implements Listener {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				   
+					return;				   
 			   }
 			}
 		}

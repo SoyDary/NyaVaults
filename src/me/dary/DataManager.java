@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -31,17 +32,17 @@ public class DataManager {
 		this.InvFile = new File("plugins/NyaVaults/Inventories.yml");
 		this.Inv = (FileConfiguration)YamlConfiguration.loadConfiguration(this.InvFile);
 	}
-	public void savePlayerName(Player p) {
-		String uuid = p.getUniqueId().toString();
+	public void savePlayerName(UUID uid, String name) {
+		String uuid = uid.toString();
 		if (Players.getString("Players."+uuid+".name") == null) {
-			Players.set("Players."+uuid+".name", p.getName());
+			Players.set("Players."+uuid+".name", name);
 			savePlayers();
 		} else {
-			if (!p.getName().equals("Players."+uuid+".name")) {
-				Players.set("Players."+uuid+".name", p.getName());
+			if (!name.equals("Players."+uuid+".name")) {
+				Players.set("Players."+uuid+".name", name);
 				savePlayers();
 			} else {
-				Players.set("Players."+uuid+".name", p.getName());
+				Players.set("Players."+uuid+".name", name);
 				savePlayers();
 			}
 		}

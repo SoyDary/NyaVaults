@@ -23,7 +23,6 @@ public class GUIManager {
     	this.mainVault = new HashMap<>();
     	this.cookiesVault = new HashMap<>();
     	this.mapsVault = new HashMap<>();
-    	this.coupleVault = new HashMap<>();
         this.Players = new HashMap<>();
         this.changePge = new ArrayList<>();
 	}
@@ -32,7 +31,6 @@ public class GUIManager {
 	public HashMap<String, VaultGUI> mainVault;
 	public HashMap<String, CookiesGUI> cookiesVault;
 	public HashMap<String, MapsGUI> mapsVault;
-	public HashMap<String, CoupleGUI> coupleVault;
     public HashMap<UUID, AdminGUI> Players;
     public ArrayList<UUID> changePge;
 
@@ -188,32 +186,7 @@ public class GUIManager {
 			p.openInventory(setExtraItems(gui.getInventory(), p, target, false));			
 		}	
 	}
-	public void couple(Player p, String target) throws IOException {
-		String id = plugin.getDataManager().Players.getString("Players."+target+".couple_vaultID");
-		File pvf = new File(plugin.getDataFolder(), "PlayerVaults/couple_"+id+".yml");
-		FileConfiguration pv = (FileConfiguration)YamlConfiguration.loadConfiguration(pvf);
-		plugin.getUtils();
-		if (!pvf.exists()) {
-			try {
-				pv.save(pvf);	
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if(coupleVault.containsKey(id)) {
-			CoupleGUI gui = coupleVault.get(id);
-			p.openInventory(setExtraItems(gui.getInventory(), p, target, true));		
-		} else {
-			CoupleGUI gui = null;
-			try {
-				gui = new CoupleGUI(target, id);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			coupleVault.put(id, gui);
-			p.openInventory(setExtraItems(gui.getInventory(), p, target, true));			
-		}	
-	}
+
 	public Inventory setExtraItems(Inventory inv, Player p, String target, boolean enchanted) {
 		if(p.hasPermission("nv.admin")) {
 			ItemStack item = ItemUtils.namedItem(Material.TEST_BLOCK, "&#ffff00&lMenú de administrador");

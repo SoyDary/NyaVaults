@@ -1,12 +1,7 @@
 package me.dary;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.UUID;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
@@ -15,14 +10,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
-import de.tr7zw.nbtapi.NBTItem;
-import me.dary.InventoryHolder.AdminGUI;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+
 
 public class MigraciónListener implements Listener {
 	
@@ -40,23 +35,15 @@ public class MigraciónListener implements Listener {
 	
 		String name = sign.getSide(Side.FRONT).getLines()[1];
 		String uuid = sign.getSide(Side.FRONT).getLines()[3];
+		plugin.getDataManager().savePlayerName(UUID.fromString(uuid), name);
+		p.sendMessage(name+" §a"+uuid);
 		
-		if(block.getY() == 124) {
-			Location loc = findSign(130, name, uuid);
-			
-			if(loc != null) {
-				loc.add(0.5, 0, 0.5);
-				p.teleport(loc);
-			}	
-		}
-		
-		
-		if(block.getY() == 130) {
-			Location loc = findSign(124, name, uuid);
-			if(loc != null) {
-				loc.add(0.5, 0, 0.5);
-				p.teleport(loc);
-			}		
-		}
+		TextComponent msg = new TextComponent("§a§l[abrir]");
+		ComponentBuilder cba1 = new ComponentBuilder();
+		cba1.append("§7§o/galletas " + uuid);
+		HoverEvent ev1 = new HoverEvent(HoverEvent.Action.SHOW_TEXT, cba1.create());
+		msg.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/caja "+uuid));
+		msg.setHoverEvent(ev1);
+		p.spigot().sendMessage(msg);
 	}
 }

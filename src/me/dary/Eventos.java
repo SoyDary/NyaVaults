@@ -25,7 +25,6 @@ import org.bukkit.inventory.ItemStack;
 import de.tr7zw.nbtapi.NBTItem;
 import me.dary.InventoryHolder.AdminGUI;
 import me.dary.InventoryHolder.CookiesGUI;
-import me.dary.InventoryHolder.CoupleGUI;
 import me.dary.InventoryHolder.MapsGUI;
 import me.dary.InventoryHolder.VaultGUI;
 import me.dary.Utils.Utils;
@@ -274,7 +273,7 @@ public class Eventos implements Listener {
 	@EventHandler
 	public void join(PlayerJoinEvent e) {
 		Player p = (Player) e.getPlayer();		  
-		plugin.getDataManager().savePlayerName(p);
+		plugin.getDataManager().savePlayerName(p.getUniqueId(), p.getName());
 		  
 	}
 	public boolean validCookie(ItemStack item) {
@@ -331,7 +330,6 @@ public class Eventos implements Listener {
 		if(holder instanceof VaultGUI) return true;
 		if(holder instanceof CookiesGUI) return true;
 		if(holder instanceof AdminGUI) return true;
-		if(holder instanceof CoupleGUI) return true;
 		if(holder instanceof MapsGUI) return true;
 		return false;
 		

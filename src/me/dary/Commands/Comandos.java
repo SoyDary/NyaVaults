@@ -15,15 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Sign;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.type.Chest.Type;
-import org.bukkit.block.sign.Side;
-import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -136,7 +127,7 @@ public class Comandos implements CommandExecutor {
 							Player op = Bukkit.getPlayer(a[0]);
 							if (op != null) {
 								try {
-									plugin.getGUI().cookies(player, op.getUniqueId().toString());
+									plugin.getGUI().cookies(player, op.getUniqueId().toString());							
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
@@ -188,115 +179,6 @@ public class Comandos implements CommandExecutor {
 									HoverEvent ev2 = new HoverEvent(HoverEvent.Action.SHOW_TEXT, cba2.create());
 									t2.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
 											"/galletas " + uuid2.split(" ")[0]));
-									t2.setHoverEvent(ev2);
-									end.addExtra((BaseComponent) t1);
-									end.addExtra("\n");
-									end.addExtra((BaseComponent) t2);
-									player.spigot().sendMessage(end);
-								}
-
-							}
-						}
-					} else {
-						player.sendMessage("§e§oPermisos insuficientes!");
-					}
-				}
-
-			}
-			if (l.equalsIgnoreCase("marrychest") || l.equalsIgnoreCase("mc")) {
-
-				if (a.length == 0) {
-					if (hasCouple(player.getUniqueId().toString())) {
-						try {
-							plugin.getGUI().couple(player, player.getUniqueId().toString());
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					} else {
-						player.sendMessage("§cNo tienes un cofre matrimonial registrado");
-					}
-				} else {
-					if (player.hasPermission("nv.admin")) {
-						if (a[0].contains("-")) {
-							if (plugin.getDataManager().Players.getString("Players." + a[0]) != null) {
-								if (hasCouple(a[0])) {
-									try {
-										plugin.getGUI().couple(player, a[0]);
-									} catch (IOException e) {
-										e.printStackTrace();
-									}
-								} else {
-									player.sendMessage("§cEste jugador notiene un cofre matrimonial registrado!");
-
-								}
-							} else {
-								player.sendMessage("§cEste no es un jugador registrado");
-							}
-						} else {
-							Player op = Bukkit.getPlayer(a[0]);
-							if (op != null) {
-								if (hasCouple(op.getUniqueId().toString())) {
-									try {
-										plugin.getGUI().couple(player, op.getUniqueId().toString());
-									} catch (IOException e) {
-										e.printStackTrace();
-									}
-								} else {
-									player.sendMessage("§cEste jugador no tiene un cofre matrimonial registrado!");
-
-								}
-							} else {
-								String uuid = null;
-								String uuid2 = null;
-								for (String key : plugin.getDataManager().Players.getConfigurationSection("Players")
-										.getKeys(false)) {
-									if (plugin.getDataManager().Players.getString("Players." + key + ".name")
-											.equalsIgnoreCase(a[0])) {
-										if (uuid == null)
-											uuid = key;
-										else
-											uuid2 = key;
-									}
-								}
-								if (uuid2 == null) {
-									if (uuid != null) {
-										if (hasCouple(uuid)) {
-											try {
-												plugin.getGUI().couple(player, uuid);
-											} catch (IOException e) {
-												e.printStackTrace();
-											}
-										} else {
-											player.sendMessage("§cEste no es un jugador registrado");
-										}
-
-									} else {
-										player.sendMessage("§cEste no es un jugador registrado");
-									}
-								} else {
-									if (plugin.getUtils().isPremium(uuid))
-										uuid = uuid + " §e(Premium)";
-									if (plugin.getUtils().isPremium(uuid2))
-										uuid2 = uuid2 + " §e(Premium)";
-									String realName = plugin.getDataManager().Players
-											.getString("Players." + uuid + ".name");
-									player.sendMessage(plugin.getUtils()
-											.color(" &#33ccff&l&oHay 2 cuentas registradas con este nombre:"));
-									player.sendMessage("");
-									TextComponent end = new TextComponent();
-									TextComponent t1 = new TextComponent("§9↳ §b" + realName + "§8: §7" + uuid);
-									ComponentBuilder cba1 = new ComponentBuilder();
-									cba1.append("§7§o/marrychest " + uuid.split(" ")[0]);
-									HoverEvent ev1 = new HoverEvent(HoverEvent.Action.SHOW_TEXT, cba1.create());
-									t1.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
-											"/marrychest " + uuid.split(" ")[0]));
-									t1.setHoverEvent(ev1);
-									TextComponent t2 = new TextComponent("§9↳ §b" + realName + "§8: §7" + uuid2);
-									ComponentBuilder cba2 = new ComponentBuilder();
-									cba2.append("§7§o/marrychest " + uuid2.split(" ")[0]);
-									HoverEvent ev2 = new HoverEvent(HoverEvent.Action.SHOW_TEXT, cba2.create());
-									t2.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
-											"/marrychest " + uuid2.split(" ")[0]));
 									t2.setHoverEvent(ev2);
 									end.addExtra((BaseComponent) t1);
 									end.addExtra("\n");
